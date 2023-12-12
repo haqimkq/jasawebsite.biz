@@ -440,8 +440,8 @@ Keterangan :
         $index = 0;
         foreach ($request->deleteTodo as $item) {
             $todo = Todo::findOrFail($item);
-            // $todo->status = 'deleted';
-            // $todo->doneAt = Carbon::now();
+            $todo->status = 'deleted';
+            $todo->doneAt = Carbon::now();
             $subject .=  $index + 1 . '. ' . $todo->subject . '\n'
                 . $todo->catatan . '\n \n';
             $index++;

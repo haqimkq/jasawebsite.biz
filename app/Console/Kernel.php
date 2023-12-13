@@ -24,8 +24,8 @@ class Kernel extends ConsoleKernel
             $date = $data->date;
             $carbonTime = Carbon::createFromFormat('H:i:s', $time);
             $formattedTime = $carbonTime->format('H:i');
+            $schedule->command('app:generate-todo-list');
         }
-        $schedule->command('app:generate-todo-list');
     }
 
 

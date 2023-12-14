@@ -4,13 +4,13 @@
         <div class="flex items-center justify-center sm:justify-end">
             <div class="relative">
                 <input name="start" type="date" id="start"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    class="bg-blue-900 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Select date start">
             </div>
             <span class="mx-4 text-gray-500">to</span>
             <div class="relative">
                 <input name="end" type="date" id="end"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    class="bg-blue-900 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Select date end">
             </div>
         </div>
@@ -164,6 +164,34 @@
 
             ],
             searching: false,
+            responsive: {
+                details: {
+                    renderer: function(api, rowIdx, columns) {
+                        let data = columns.map((col, i) => {
+                            return col.hidden ?
+                                '<tr class="text-start" data-dt-row="' +
+                                col.rowIndex +
+                                '" data-dt-column="' +
+                                col.columnIndex +
+                                '">' +
+                                '<td class="text-start">' +
+                                col.title +
+                                ':' +
+                                '</td> ' +
+                                '<td class="text-start">' +
+                                col.data +
+                                '</td>' +
+                                '</tr>' :
+                                '';
+                        }).join('');
+
+                        let table = document.createElement('table');
+                        table.innerHTML = data;
+
+                        return data ? table : false;
+                    }
+                }
+            },
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex'
@@ -179,7 +207,7 @@
                         if (full.image !== null) {
                             return `
                                     <div class="flex items-center gap-2">
-                                        <div>
+                                        <div class="flex-none">
                                             <img class="w-14 h-14 object-cover rounded-full" src="{{ asset('storage/images/fotoProfil') }}/${full.image}">
                                         </div>
                                         <p>${data}</p>
@@ -188,7 +216,7 @@
                         } else {
                             return `
                                     <div class="flex items-center gap-2">
-                                        <div class="w-14 h-14 bg-gray-500 flex items-center justify-center rounded-full">
+                                        <div class="w-14 h-14 bg-gray-500 flex items-center justify-center rounded-full flex-none">
                                             <span class="text-white text-2xl">${initials}</span>
                                         </div> 
                                         <p>${data}</p>
@@ -208,7 +236,7 @@
                                 totalPoints += todo.point ? parseInt(todo.point) : 0;
                             });
                         }
-                        return totalPoints;
+                        return '<p class="text-center">' + totalPoints + '</p>';
                     }
                 },
                 {

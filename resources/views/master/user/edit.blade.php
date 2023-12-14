@@ -66,17 +66,19 @@
                                         :value="old('email', $user->email)" required autocomplete="username" />
                                     <x-input-error class="mt-2" :messages="$errors->get('email')" />
                                 </div>
-                                <div>
-                                    <x-input-label for="no_hp" :value="__('Nomor Hp')" />
-                                    <x-text-input id="no_hp" name="no_hp" type="text" class="mt-1 block w-full"
-                                        :value="old('no_hp', $user->no_hp)" autofocus autocomplete="name" />
-                                    <x-input-error class="mt-2" :messages="$errors->get('name')" />
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <input type="checkbox" name="isShowPoint" id="isShowPoint" class="rounded-full"
-                                        value="1" @if ($user->isShowPoint == true) checked @endif>
-                                    <x-input-label for="isShowPoint" :value="__('Tampilkan Point')" />
-                                </div>
+                                @if ($user->isSupport == true)
+                                    <div>
+                                        <x-input-label for="no_hp" :value="__('Nomor Hp')" />
+                                        <x-text-input id="no_hp" name="no_hp" type="text"
+                                            class="mt-1 block w-full" :value="old('no_hp', $user->no_hp)" autofocus autocomplete="name" />
+                                        <x-input-error class="mt-2" :messages="$errors->get('name')" />
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" name="isShowPoint" id="isShowPoint" class="rounded-full"
+                                            value="1" @if ($user->isShowPoint == true) checked @endif>
+                                        <x-input-label for="isShowPoint" :value="__('Tampilkan Point')" />
+                                    </div>
+                                @endif
                                 <div class="flex items-center gap-4">
                                     <x-primary-button>{{ __('Save') }}</x-primary-button>
 
@@ -105,29 +107,16 @@
                             </p>
                         </header>
 
-                        <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
+                        <form method="post" action="{{ route('users.passwordUpdate', $user->id) }}"
+                            class="mt-6 space-y-6">
                             @csrf
                             @method('put')
-
-                            <div>
-                                <x-input-label for="current_password" :value="__('Current Password')" />
-                                <x-text-input id="current_password" name="current_password" type="password"
-                                    class="mt-1 block w-full" autocomplete="current-password" />
-                                <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
-                            </div>
 
                             <div>
                                 <x-input-label for="password" :value="__('New Password')" />
                                 <x-text-input id="password" name="password" type="password" class="mt-1 block w-full"
                                     autocomplete="new-password" />
                                 <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
-                            </div>
-
-                            <div>
-                                <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-                                <x-text-input id="password_confirmation" name="password_confirmation" type="password"
-                                    class="mt-1 block w-full" autocomplete="new-password" />
-                                <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
                             </div>
 
                             <div class="flex items-center gap-4">

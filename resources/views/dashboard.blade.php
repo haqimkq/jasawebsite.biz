@@ -582,7 +582,7 @@
                         </div>
                     </div> --}}
                     <div class=" border rounded-lg w-full overflow-hidden">
-                        <div class="p-2 bg-gray-600 rounded-t-lg text-white text-sm">
+                        <div class="p-2 bg-blue-800 dark:bg-gray-600 rounded-t-lg text-white text-sm">
                             <p>Leaderboards</p>
                         </div>
                         <div class="text-white space-y-2 p-2 h-[420px] overflow-auto">
@@ -596,7 +596,8 @@
                                 $indexPoint = 0;
                             @endphp
                             @foreach ($dataPoint as $point)
-                                <div class="flex items-center border rounded-lg justify-between px-5 py-2 bg-gray-700">
+                                <div
+                                    class="flex items-center border rounded-lg justify-between px-5 py-2 dark:bg-gray-700 bg-blue-900">
                                     <div class="flex gap-3 items-center">
                                         <p>
                                             {{ numberToOrdinal($indexPoint + 1) }}

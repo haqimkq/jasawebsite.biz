@@ -58,52 +58,58 @@
                     </h2>
                 </div>
                 <div class="lg:flex gap-5">
-                    <div class=" lg:border rounded-lg flex items-center justify-center p-5 border-gray-500">
-                        <div class="lg:border-none border p-5 rounded-lg border-gray-500">
-                            @if (count($pelanggans) > 0)
-                                <div class="flex justify-center">
-                                    <img class="border object-cover w-52 h-52 rounded-full transition ease-out duration-1000 hover:scale-105"
-                                        src="{{ asset('storage/images/fotoProfil') }}/{{ $pelanggans[0]->image }}"
-                                        alt="">
-                                </div>
-                            @else
-                                <div class="flex justify-center">
-                                    <img class="border object-cover w-52 h-52 rounded-full transition ease-out duration-1000 hover:scale-105"
-                                        src="{{ asset('storage/images/fotoProfil/default_image.jpg') }}" alt="">
-                                </div>
-                            @endif
+                    <div>
+                        <div class=" lg:border rounded-lg flex justify-center p-5 border-gray-500">
+                            <div class="lg:border-none border p-5 rounded-lg border-gray-500">
+                                @if (count($pelanggans) > 0)
+                                    <div class="flex justify-center flex-none w-52 h-52">
+                                        <img class="border object-cover w-52 h-52 rounded-full transition ease-out duration-1000 hover:scale-105"
+                                            src="{{ asset('storage/images/fotoProfil') }}/{{ $pelanggans[0]->image }}"
+                                            alt="">
+                                    </div>
+                                @else
+                                    <div class="flex justify-center flex-none w-52 h-52">
+                                        <img class="border object-cover w-52 h-52 rounded-full transition ease-out duration-1000 hover:scale-105"
+                                            src="{{ asset('storage/images/fotoProfil/default_image.jpg') }}"
+                                            alt="">
+                                    </div>
+                                @endif
 
 
-                            <div class="max-w-[200px] pt-3">
-                                <div class="flex gap-3 mb-3">
-                                    <i class="fa-solid fa-user self-center dark:text-white text-black"></i>
-                                    <p class="dark:text-white text-black self-center">
-                                        {{ count($pelanggans) > 0 ? $pelanggans[0]->nama_pelanggan : '-' }}
-                                    </p>
-                                </div>
-                                <div class="flex gap-3 mb-3">
-                                    <i class="fa-solid fa-phone self-center dark:text-white text-black"></i>
-                                    <p class="dark:text-white text-black self-center">
-                                        {{ count($pelanggans) > 0 ? $pelanggans[0]->no_hp : '-' }}
-                                    </p>
-                                </div>
-                                <div class="flex gap-3">
-                                    <i class="fa-solid fa-location-dot mt-1 dark:text-white text-black"></i>
-                                    <p class="dark:text-white text-black self-center">
-                                        {{ count($pelanggans) > 0 ? $pelanggans[0]->alamat : '-' }}
-                                    </p>
+                                <div class="max-w-[200px] pt-3">
+                                    <div class="flex gap-3 mb-3">
+                                        <i class="fa-solid fa-user self-center dark:text-white text-black"></i>
+                                        <p class="dark:text-white text-black self-center">
+                                            {{ count($pelanggans) > 0 ? $pelanggans[0]->nama_pelanggan : '-' }}
+                                        </p>
+                                    </div>
+                                    <div class="flex gap-3 mb-3">
+                                        <i class="fa-solid fa-phone self-center dark:text-white text-black"></i>
+                                        <p class="dark:text-white text-black self-center">
+                                            {{ count($pelanggans) > 0 ? $pelanggans[0]->no_hp : '-' }}
+                                        </p>
+                                    </div>
+                                    <div class="flex gap-3">
+                                        <i class="fa-solid fa-location-dot mt-1 dark:text-white text-black"></i>
+                                        <p class="dark:text-white text-black self-center">
+                                            {{ count($pelanggans) > 0 ? $pelanggans[0]->alamat : '-' }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
-                    <div class="flex-auto border rounded-lg p-5 border-gray-500 mt-10 lg:mt-0">
+                    <div class="flex-auto border rounded-lg p-5 border-gray-500 mt-10 lg:mt-0 grid">
                         <h2 class="dark:text-white text-black text-xl lg:text-3xl mb-5">Daftar Domain</h2>
                         <div class="rounded-lg overflow-x-auto">
-                            <table class="w-full text-sm text-left text-gray-400">
+                            <table class="w-full text-sm text-left text-gray-400" id="tableUser">
                                 <thead
                                     class="text-xs uppercase bg-blue-900 dark:bg-gray-700 text-white dark:text-gray-200 text-center whitespace-nowrap">
                                     <tr>
+                                        <th scope="col" class="px-6 py-3">
+                                            No.
+                                        </th>
                                         <th scope="col" class="px-6 py-3">
                                             Nama Domain
                                         </th>
@@ -127,8 +133,14 @@
                                         <tr
                                             class="dark:hover:bg-gray-700 hover:bg-gray-300 border-b dark:bg-gray-900 dark:border-gray-700 text-center">
                                             <th scope="row"
-                                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                {{ $item->nama_domain }}
+                                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-start">
+                                                {{ $loop->index + 1 }}
+                                            </th>
+                                            <th scope="row"
+                                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-start">
+                                                <a href="{{ route('domain.show', $item->slug) }}">
+                                                    {{ $item->nama_domain }}
+                                                </a>
                                             </th>
                                             <td class="px-6 py-4 dark:text-white text-gray-900">
                                                 {{ $item->tanggal_expired }}
@@ -136,13 +148,14 @@
                                             <td class="px-6 py-4 dark:to-blue-500 text-blue-600">
                                                 <button data-modal-target="editNameserver-{{ $item->id }}"
                                                     data-modal-toggle="editNameserver-{{ $item->id }}">
-                                                    {{ $item->nameserver->nameserver1 }}
+                                                    {{ $item->nameserver ? $item->nameserver->nameserver1 : 'null' }}
                                                 </button>
                                             </td>
+
                                             <x-modal.editNameserver id='{{ $item->id }}'
-                                                nameserver1='{{ $item->nameserver->nameserver1 }}'
+                                                nameserver1='{{ $item->nameserver ? $item->nameserver->nameserver1 : null }}'
                                                 nama_domain="{{ $item->nama_domain }}"
-                                                nameserver2='{{ $item->nameserver->nameserver2 }}'>
+                                                nameserver2='{{ $item->nameserver ? $item->nameserver->nameserver2 : null }}'>
                                             </x-modal.editNameserver>
                                             <td class="text-black dark:text-white">
                                                 @if ($today >= $expirationDate::parse($item->tanggal_expired))
@@ -167,8 +180,6 @@
             </div>
             <div class="hidden p-4 rounded-lg" id="settings" role="tabpanel" aria-labelledby="settings-tab">
                 <h2 class="dark:text-white text-black text-3xl">Edit Profile</h2>
-
-
                 @if (count($pelanggans) > 0)
                     <form method="post" action="{{ route('pelanggan.update', $pelanggans[0]->id) }}"
                         class="mt-6 space-y-6" enctype="multipart/form-data">
@@ -343,3 +354,45 @@
         </div>
     </div>
 </x-app-layout>
+<script>
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var table = $('#tableUser').DataTable({
+            paging: false,
+            searching: false,
+            info: false,
+            responsive: {
+                details: {
+                    renderer: function(api, rowIdx, columns) {
+                        let data = columns.map((col, i) => {
+                            return col.hidden ?
+                                '<tr class="text-start" data-dt-row="' +
+                                col.rowIndex +
+                                '" data-dt-column="' +
+                                col.columnIndex +
+                                '">' +
+                                '<td class="text-start">' +
+                                col.title +
+                                ':' +
+                                '</td> ' +
+                                '<td class="text-start">' +
+                                col.data +
+                                '</td>' +
+                                '</tr>' :
+                                '';
+                        }).join('');
+
+                        let table = document.createElement('table');
+                        table.innerHTML = data;
+
+                        return data ? table : false;
+                    }
+                }
+            },
+        });
+    });
+</script>

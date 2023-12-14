@@ -1,6 +1,6 @@
     <x-app-layout title="To Do List">
         <div class="mx-10 py-3 relative">
-            <div class="flex justify-between">
+            <div class="sm:flex justify-between space-y-2">
                 <div class="flex gap-1 items-center">
                     @if ($user->image !== null)
                         <img class="w-20 h-20 object-cover rounded-full"
@@ -28,13 +28,13 @@
                 <div class="flex items-center justify-center sm:justify-end">
                     <div class="relative">
                         <input name="start" type="date" id="start"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            class="bg-blue-900 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Select date start" value="{{ $start }}">
                     </div>
                     <span class="mx-4 text-gray-500">to</span>
                     <div class="relative">
                         <input name="end" type="date" id="end"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            class="bg-blue-900 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Select date end" value="{{ $end }}">
                     </div>
                 </div>
@@ -112,7 +112,7 @@
                         text: '<i class="fas fa-file-csv text-white" title="Export CSV"></i>',
                         className: 'datatable-button',
                         exportOptions: {
-                            columns: [0, 1, 2]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
                         }
                     },
                     {
@@ -120,7 +120,7 @@
                         text: '<i class="fas fa-file-excel text-white" title="Export Excel"></i>',
                         className: 'datatable-button',
                         exportOptions: {
-                            columns: [0, 1, 2]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
                         }
                     },
                     {
@@ -128,7 +128,7 @@
                         text: '<i class="fas fa-file-pdf text-white" title="Export PDF"></i>',
                         className: 'datatable-button',
                         exportOptions: {
-                            columns: [0, 1, 2]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
                         }
                     },
                     {
@@ -136,7 +136,7 @@
                         text: '<i class="fas fa-print text-white" title="Print Halaman"></i>',
                         className: 'datatable-button',
                         exportOptions: {
-                            columns: [0, 1, 2]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
                         }
                     },
 

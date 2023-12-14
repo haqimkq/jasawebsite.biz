@@ -47,9 +47,9 @@
                     <div class="border border-gray-500 rounded-lg h-full">
                         <div class="">
                             <div
-                                class="  flex justify-between items-center bg-blue-800 dark:bg-gray-600 px-3 rounded-t-lg">
-                                <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab"
-                                    data-tabs-toggle="#myTabContent" role="tablist">
+                                class="  sm:flex justify-between items-center bg-blue-800 dark:bg-gray-600 px-3 rounded-t-lg">
+                                <ul class="flex justify-center sm:justify-start flex-wrap -mb-px text-sm font-medium text-center"
+                                    id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
                                     <li class="mr-2" role="presentation">
                                         <button
                                             class="inline-block p-4 dark:border-b-2 focus:border-b-2 active:border-b-2 hover:border-b-2 focus:border-orange-600 active:border-orange-600 hover:text-orange-500 rounded-t-lg  text-white active:text-orange-500 hover:border-orange-500 focus:text-orange-500 dark:text-white dark:active:text-white dark:focus:text-white"
@@ -72,7 +72,7 @@
                                             Done</button>
                                     </li>
                                 </ul>
-                                <div class="flex items-center gap-1">
+                                <div class="flex items-center gap-1 justify-center sm:justify-start">
                                     <div class="mr-2 py-3">
                                         <a href="{{ route('todos.calendar') }}"
                                             class="inline-block text-xl bg-white rounded-lg text-gray-600 px-2"><i
@@ -378,6 +378,10 @@
                 dots: false,
                 responsive: {
                     0: {
+                        items: 1,
+                        stagePadding: 50
+                    },
+                    420: {
                         items: 2
                     },
                     600: {

@@ -192,6 +192,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('todos/get/calendar/{user}', [TodoController::class, 'calendarGet']);
     Route::resource('/notepad', NotepadController::class);
     Route::resource('/cronjob', CronjobController::class);
+    Route::put('/users/{user}', [UserController::class, 'updatePassword'])->name('users.passwordUpdate');
 });
 
 Route::middleware(['auth', 'support'])->group(function () {

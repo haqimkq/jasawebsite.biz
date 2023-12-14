@@ -136,6 +136,12 @@ class UserController extends Controller
         $user->fill($request->post())->save();
         return redirect()->route('user.index');
     }
+    public function updatePassword(User $user, Request $request)
+    {
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return back()->with('status', 'password-updated');
+    }
     public function destroy($id)
     {
 

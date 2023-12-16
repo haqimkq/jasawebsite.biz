@@ -6,38 +6,40 @@
                 @csrf
                 @method('PUT')
                 <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                    <div class=" flex gap-5">
+                    <div class=" sm:flex gap-5">
                         <div class="flex-none">
                             @if ($user->isAdmin == false && $user->isSupport == true)
-                                <div class="relative">
-                                    @if ($user->image !== null)
-                                        <img id="fotoProfil" class="object-cover w-40 h-40"
-                                            src="{{ asset('storage/images/fotoProfil') }}/{{ $user->image }}"
-                                            alt="">
-                                    @else
-                                        <img id="fotoProfil" class="object-cover w-40 h-40"
-                                            src="{{ asset('storage/images/fotoProfil') }}/default_image.jpg"
-                                            alt="">
-                                    @endif
-                                    <div class="absolute z-10 top-0  opacity-0 hover:opacity-100">
-                                        <label for="fotoProfilInput">
-                                            <div class="w-40 h-40 bg-black opacity-60 flex items-center">
-                                                <p class="text-center w-full"><i class="fa-solid fa-pen"
-                                                        style="color: #ffffff;"></i>
-                                                </p>
-                                            </div>
-                                            <input accept="image/*" type="file" name="image" class="hidden"
-                                                id="fotoProfilInput" />
-                                        </label>
-                                    </div>
-                                    <script>
-                                        fotoProfilInput.onchange = evt => {
-                                            const [file] = fotoProfilInput.files
-                                            if (file) {
-                                                fotoProfil.src = URL.createObjectURL(file)
+                                <div class="flex justify-center">
+                                    <div class="relative">
+                                        @if ($user->image !== null)
+                                            <img id="fotoProfil" class="object-cover w-40 h-40"
+                                                src="{{ asset('storage/images/fotoProfil') }}/{{ $user->image }}"
+                                                alt="">
+                                        @else
+                                            <img id="fotoProfil" class="object-cover w-40 h-40"
+                                                src="{{ asset('storage/images/fotoProfil') }}/default_image.jpg"
+                                                alt="">
+                                        @endif
+                                        <div class="absolute z-10 top-0  opacity-0 hover:opacity-100">
+                                            <label for="fotoProfilInput">
+                                                <div class="w-40 h-40 bg-black opacity-60 flex items-center">
+                                                    <p class="text-center w-full"><i class="fa-solid fa-pen"
+                                                            style="color: #ffffff;"></i>
+                                                    </p>
+                                                </div>
+                                                <input accept="image/*" type="file" name="image" class="hidden"
+                                                    id="fotoProfilInput" />
+                                            </label>
+                                        </div>
+                                        <script>
+                                            fotoProfilInput.onchange = evt => {
+                                                const [file] = fotoProfilInput.files
+                                                if (file) {
+                                                    fotoProfil.src = URL.createObjectURL(file)
+                                                }
                                             }
-                                        }
-                                    </script>
+                                        </script>
+                                    </div>
                                 </div>
                             @endif
                         </div>

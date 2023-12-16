@@ -6,7 +6,7 @@
                 @csrf
                 @method('PUT')
                 <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                    <div class=" sm:flex gap-5">
+                    <div class="sm:flex gap-5">
                         <div class="flex-none">
                             @if ($user->isAdmin == false && $user->isSupport == true)
                                 <div class="flex justify-center">

@@ -31,10 +31,12 @@
         @if (Auth::user()->isAdmin == true) style="height:316px" @else style="height:420px" @endif>
         @if (count($todo) > 0)
             @foreach ($todo as $item)
-                <div id="todo-collapse" class=" todo-item" data-accordion="collapse" data-status="{{ $item->status }}">
-                    <h2 id="todo-collapse-heading-{{ $item->id }}">
-                        <button type="button"
-                            class="flex items-center justify-between w-full p-2 font-medium text-left 
+                @if ($item->status != 'done')
+                    <div id="todo-collapse" class=" todo-item" data-accordion="collapse"
+                        data-status="{{ $item->status }}">
+                        <h2 id="todo-collapse-heading-{{ $item->id }}">
+                            <button type="button"
+                                class="flex items-center justify-between w-full p-2 font-medium text-left 
                                                     text-gray-800 dark:text-white
                                                     border
                                                     dark:bg-gray-600 bg-blue-100
@@ -47,85 +49,86 @@
                                                     hover:bg-gray-100 dark:hover:bg-gray-800 
                                                     dark:active:bg-gray-600 active:bg-blue-200
                                                     "
-                            data-accordion-target="#todo-collapse-body-{{ $item->id }}" aria-expanded="false"
-                            aria-controls="todo-collapse-body-{{ $item->id }}">
-                            <span class="text-sm"> {{ $item->subject }}</span>
-                            <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M9 5 5 1 1 5" />
-                            </svg>
-                        </button>
-                    </h2>
-                    <div id="todo-collapse-body-{{ $item->id }}" class="hidden"
-                        aria-labelledby="todo-collapse-heading-{{ $item->id }}">
-                        <div
-                            class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900 bg-white rounded-lg mt-1 dark:text-white text-sm">
-                            <div class="flex">
-                                <div class="flex justify-between w-40 flex-none">
-                                    <p>
-                                        User
-                                    </p>
-                                    <p>:</p>
-                                </div>
-                                <div class="ml-1">
-                                    <ul>
-                                        @foreach ($item->users as $items)
-                                            <li>
-                                                - {{ $items->name }}
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="flex">
-                                <div class="flex justify-between w-40 flex-none">
-                                    <p>
-                                        Domain
-                                    </p>
-                                    <p>:</p>
-                                </div>
-                                <div class="ml-1">
-                                    <ul>
-                                        @foreach ($item->domains as $items)
-                                            <li>
-                                                {{ $items->nama_domain }}
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
-                            @if (count($item->domains) > 0)
+                                data-accordion-target="#todo-collapse-body-{{ $item->id }}" aria-expanded="false"
+                                aria-controls="todo-collapse-body-{{ $item->id }}">
+                                <span class="text-sm"> {{ $item->subject }}</span>
+                                <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M9 5 5 1 1 5" />
+                                </svg>
+                            </button>
+                        </h2>
+                        <div id="todo-collapse-body-{{ $item->id }}" class="hidden"
+                            aria-labelledby="todo-collapse-heading-{{ $item->id }}">
+                            <div
+                                class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900 bg-white rounded-lg mt-1 dark:text-white text-sm">
                                 <div class="flex">
                                     <div class="flex justify-between w-40 flex-none">
                                         <p>
-                                            Contact Client
+                                            User
                                         </p>
                                         <p>:</p>
                                     </div>
                                     <div class="ml-1">
-                                        <a
-                                            href="//wa.me/{{ $item->domains[0]->pelanggan->no_hp }}">{{ $item->domains[0]->pelanggan->no_hp }}</a>
+                                        <ul>
+                                            @foreach ($item->users as $items)
+                                                <li>
+                                                    - {{ $items->name }}
+                                                </li>
+                                            @endforeach
+                                        </ul>
                                     </div>
                                 </div>
-                            @endif
-                            <div class="flex">
-                                <div class="flex justify-between w-40 flex-none">
-                                    <p>
-                                        Catatan
-                                    </p>
-                                    <p>:</p>
+                                <div class="flex">
+                                    <div class="flex justify-between w-40 flex-none">
+                                        <p>
+                                            Domain
+                                        </p>
+                                        <p>:</p>
+                                    </div>
+                                    <div class="ml-1">
+                                        <ul>
+                                            @foreach ($item->domains as $items)
+                                                <li>
+                                                    {{ $items->nama_domain }}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p class="ml-1" style="word-break: break-all">
-                                        {!! nl2br(e($item->catatan)) !!}
-                                    </p>
+                                @if (count($item->domains) > 0)
+                                    <div class="flex">
+                                        <div class="flex justify-between w-40 flex-none">
+                                            <p>
+                                                Contact Client
+                                            </p>
+                                            <p>:</p>
+                                        </div>
+                                        <div class="ml-1">
+                                            <a
+                                                href="//wa.me/{{ $item->domains[0]->pelanggan->no_hp }}">{{ $item->domains[0]->pelanggan->no_hp }}</a>
+                                        </div>
+                                    </div>
+                                @endif
+                                <div class="flex">
+                                    <div class="flex justify-between w-40 flex-none">
+                                        <p>
+                                            Catatan
+                                        </p>
+                                        <p>:</p>
+                                    </div>
+                                    <div>
+                                        <p class="ml-1" style="word-break: break-all">
+                                            {!! nl2br(e($item->catatan)) !!}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
             @endforeach
         @else
             <button type="button"

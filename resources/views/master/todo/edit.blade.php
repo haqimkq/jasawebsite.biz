@@ -108,6 +108,17 @@
                                             </option>
                                             <option @if ($todo->point == 5) selected @endif value="5">5
                                             </option>
+                                            <option @if ($todo->point == 6) selected @endif value="6">6
+                                            </option>
+                                            <option @if ($todo->point == 7) selected @endif value="7">7
+                                            </option>
+                                            <option @if ($todo->point == 8) selected @endif value="8">8
+                                            </option>
+                                            <option @if ($todo->point == 9) selected @endif value="9">9
+                                            </option>
+                                            <option @if ($todo->point == 10) selected @endif value="10">
+                                                10
+                                            </option>
                                         </select>
                                     </div>
                                 </div>

@@ -63,7 +63,6 @@
         </div>
     </div>
 
-
     <script type="text/javascript">
         $(document).ready(function() {
             // Pass Header Token
@@ -112,7 +111,7 @@
                     },
                     {
                         className: 'filterButton',
-                        text: '<div class="space-x-2"><input class="rounded-full" type="radio"  name="filter" id="onlyHostingFilter" {{ request()->input('onlyHosting') == 1 ? 'checked' : '' }}><label class="text-white text-sm" for="onlyHostingFilter">Hosting Only ({!! $hostingCount !!})</label></div>',
+                        text: '<div class="space-x-2" title="Hosting Only"><input class="rounded-full hidden" type="radio"  name="filter" id="onlyHostingFilter" {{ request()->input('onlyHosting') == 1 ? 'checked' : '' }}><label class="text-white text-sm" for="onlyHostingFilter"><i class="fa-solid fa-server"></i> ({!! $hostingCount !!})</label></div>',
                         action: function(e, dt, node, config) {
                             var checkbox = $('#onlyHostingFilter');
                             checkbox.prop('checked', !checkbox.prop('checked'));
@@ -121,7 +120,7 @@
                     },
                     {
                         className: 'filterButton',
-                        text: '<div class="space-x-2"><input class="rounded-full" type="radio"  name="filter" id="tempDomainFilter"><label class="text-white text-sm" for="tempDomainFilter">Temp Domain ({!! $tempDomainCount !!})</label></div>',
+                        text: '<div class="space-x-2" title="Temp Domain"><input class="rounded-full hidden" type="radio"  name="filter" id="tempDomainFilter"><label class="text-white text-sm" for="tempDomainFilter"><i class="fa-regular fa-clock"></i> ({!! $tempDomainCount !!})</label></div>',
                         action: function(e, dt, node, config) {
                             var checkbox = $('#tempDomainFilter');
                             checkbox.prop('checked', !checkbox.prop('checked'));
@@ -130,7 +129,7 @@
                     },
                     {
                         className: 'filterButton',
-                        text: '<div class="space-x-2"><input class="rounded-full" type="radio"  name="filter" id="externalDomain" {{ request()->input('onlyHosting') == 3 ? 'checked' : '' }}><label class="text-white text-sm" for="externalDomain" >External Domain ({!! $externalDomainCount !!})</label></div>',
+                        text: '<div class="space-x-2" title="External Domain"><input class="rounded-full hidden" type="radio"  name="filter" id="externalDomain" {{ request()->input('onlyHosting') == 3 ? 'checked' : '' }}><label class="text-white text-sm" for="externalDomain"><i class="fa-solid fa-arrow-up-right-from-square"></i> ({!! $externalDomainCount !!})</label></div>',
                         action: function(e, dt, node, config) {
                             var checkbox = $('#externalDomain');
                             checkbox.prop('checked', !checkbox.prop('checked'));
@@ -215,13 +214,13 @@
                         }
                     },
                     {
-                        data: 'pelanggan',
-                        name: 'pelanggan',
+                        data: 'pelanggan.nama_pelanggan',
+                        name: 'pelanggan.nama_pelanggan',
                         render: function(data, type, full, meta) {
                             if (data) {
                                 return '<div class="text-start flex justify-start items-center"><a href="/pelanggan/' +
-                                    data.id + '">' +
-                                    data.nama_pelanggan + '</a></div>';
+                                    full.pelanggan.id + '">' +
+                                    data + '</a></div>';
                             } else {
                                 return '';
                             }

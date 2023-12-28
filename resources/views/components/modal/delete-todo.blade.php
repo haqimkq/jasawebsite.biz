@@ -3,7 +3,7 @@
     <div class="relative w-full max-w-2xl max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-800 border-white border">
-            <form action="{{ route('todo.postDone') }}" method="POST">
+            <form action="{{ route('todo.postDone') }}" method="POST" id="myForm">
                 @method('POST')
                 @csrf
                 <div
@@ -42,3 +42,12 @@
         </div>
     </div>
 </div>
+<script>
+    document.getElementById('myForm').addEventListener('submit', function(event) {
+        var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+        if (checkboxes.length < 1) {
+            event.preventDefault();
+            alert('Pilih setidaknya satu opsi!');
+        }
+    });
+</script>

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->boolean('isSupport')->default(0);
             $table->string('image')->nullable();
             $table->boolean('isShowPoint')->default('1');
+            $table->boolean('isMember')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

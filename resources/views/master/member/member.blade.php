@@ -110,18 +110,18 @@
                                         <th scope="col" class="px-6 py-3">
                                             No.
                                         </th>
-                                        <th scope="col" class="px-6 py-3">
+                                        <th scope="col" p class="px-6 py-3">
                                             Nama Domain
                                         </th>
                                         <th scope="col" class="px-6 py-3">
                                             Tanggal Expired
                                         </th>
-                                        <th scope="col" class="px-6 py-3">
+                                        {{-- <th scope="col" class="px-6 py-3">
                                             Nameserver
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
+                                        </th> --}}
+                                        {{-- <th scope="col" class="px-6 py-3">
                                             Status
-                                        </th>
+                                        </th> --}}
                                         <th scope="col" class="px-6 py-3">
                                             Action
                                         </th>
@@ -139,13 +139,21 @@
                                             <th scope="row"
                                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-start">
                                                 <a href="{{ route('domain.show', $item->slug) }}">
-                                                    {{ $item->nama_domain }}
+                                                    @if ($today >= $expirationDate::parse($item->tanggal_expired))
+                                                        <p class="text-red-500" title="Domain Expired">
+                                                            {{ $item->nama_domain }}
+                                                        </p>
+                                                    @else
+                                                        <p class="text-green-500" title="Domain Aktif">
+                                                            {{ $item->nama_domain }}
+                                                        </p>
+                                                    @endif
                                                 </a>
                                             </th>
                                             <td class="px-6 py-4 dark:text-white text-gray-900">
                                                 {{ $item->tanggal_expired }}
                                             </td>
-                                            <td class="px-6 py-4 dark:to-blue-500 text-blue-600">
+                                            {{-- <td class="px-6 py-4 dark:to-blue-500 text-blue-600">
                                                 <button data-modal-target="editNameserver-{{ $item->id }}"
                                                     data-modal-toggle="editNameserver-{{ $item->id }}">
                                                     {{ $item->nameserver ? $item->nameserver->nameserver1 : 'null' }}
@@ -156,18 +164,20 @@
                                                 nameserver1='{{ $item->nameserver ? $item->nameserver->nameserver1 : null }}'
                                                 nama_domain="{{ $item->nama_domain }}"
                                                 nameserver2='{{ $item->nameserver ? $item->nameserver->nameserver2 : null }}'>
-                                            </x-modal.editNameserver>
-                                            <td class="text-black dark:text-white">
+                                            </x-modal.editNameserver> --}}
+                                            {{-- <td class="text-black dark:text-white">
                                                 @if ($today >= $expirationDate::parse($item->tanggal_expired))
                                                     Expired
                                                 @else
                                                     Aktif
                                                 @endif
-                                            </td>
+                                            </td> --}}
 
-                                            <td class="px-6 py-4">
+                                            <td class="px-6 py-4 flex justify-center items-center gap-2">
                                                 <a href="{{ route('domain.show', ['slug' => $item->slug]) }}"
                                                     class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Detail</a>
+                                                <a href="{{ route('createTodoByUser', ['slug' => $item->slug]) }}"
+                                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Support</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -393,6 +403,10 @@
                     }
                 }
             },
+            columnDefs: [{
+                responsivePriority: 1,
+                targets: 1
+            }, ]
         });
     });
 </script>

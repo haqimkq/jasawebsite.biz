@@ -36,4 +36,8 @@ class Todo extends Model
     {
         return $this->belongsTo(User::class, 'todoFrom');
     }
+    public function file()
+    {
+        return $this->belongsToMany(FileTodo::class, 'todo_file_todo');
+    }
 }

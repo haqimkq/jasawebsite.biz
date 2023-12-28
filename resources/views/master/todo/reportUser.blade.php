@@ -1,4 +1,5 @@
     <x-app-layout title="To Do List">
+        <div id="loading" class="loader fixed right-3 top-5 z-50" style="display: none"></div>
         <div class="mx-10 py-3 relative">
             <div class="sm:flex justify-between space-y-2">
                 <div class="flex gap-1 items-center">
@@ -65,9 +66,12 @@
                             Keterangan
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Point
+                            Attachment
                         </th>
                         @if (Auth::user()->isAdmin == true)
+                            <th scope="col" class="px-6 py-3">
+                                Point
+                            </th>
                             <th scope="col" class="px-6 py-3">
                                 Action
                             </th>
@@ -79,9 +83,6 @@
                 </tbody>
             </table>
         </div>
-        @foreach ($user->todos as $item)
-            {{ $item->fromUser }}
-        @endforeach
     </x-app-layout>
     <script>
         $(document).ready(function() {
@@ -223,13 +224,43 @@
                             }
                             return '<p class="text-start">' + nl2br(data) + '</p>';
                         }
-                    },
-                    {
-                        data: 'point',
-                        name: 'point',
+                    }, {
+                        data: 'file',
+                        name: 'file',
+                        render: function(data, type, full, meta) {
+                            function removeCurlyBraces(text) {
+                                return text.replace(/\{[^}]*\}/g, '');
+                            }
+                            let container = '<ul class="grid">';
+                            data.forEach(item => {
+                                container +=
+                                    '<li class="truncate text-blue-500 hover:underline"><a href="/todos/file/download/' +
+                                    item.id + '" target="_blank">' +
+                                    removeCurlyBraces(
+                                        item.nama_file) +
+                                    '</a></li>';
+                            });
+                            container += '</ul>'
+                            return container;
+                        }
                     },
                     @if (Auth::user()->isAdmin == true)
                         {
+                            data: 'point',
+                            name: 'point',
+                            render: function(data, type, full, meta) {
+                                let selectOptions =
+                                    '<select data-todo-id="' + full.id +
+                                    '" name="point" class="point bg-transparent border-none focus:ring-0 text-blue-500">';
+                                for (let i = 1; i <= 10; i++) {
+                                    let selected = (data == i) ? 'selected' : '';
+                                    selectOptions +=
+                                        `<option value="${i}" ${selected}>${i}</option>`;
+                                }
+                                selectOptions += '</select>';
+                                return selectOptions;
+                            }
+                        }, {
                             data: 'action',
                             name: 'action',
                             sortable: false
@@ -279,7 +310,6 @@
                 fetchData(start, end);
             });
             $('body').on('click', '.deleteProduct', function() {
-
                 var todo_id = $(this).data("id");
                 $.ajax({
                     method: "DELETE",
@@ -293,6 +323,25 @@
                     error: function(data) {
                         console.log('Error:', data);
                     }
+                });
+            });
+            $('body').on('change', '.point', function() {
+                var point = $(this).val();
+                var todoId = $(this).data('todo-id');
+                const loading = document.getElementById('loading');
+                loading.style.display = 'block';
+                $.ajax({
+                    url: '/todos/point/changepoint',
+                    method: 'PUT',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: todoId,
+                        point: point
+                    },
+                    success: function(response) {
+                        loading.style.display = 'none';
+                    },
+                    error: function(error) {}
                 });
             });
         });

@@ -45,7 +45,7 @@
                 </div>
                 <div class="h-[525px]" id="todoCont">
                     <div class="border border-gray-500 rounded-lg h-full">
-                        <div class="">
+                        <div>
                             <div
                                 class="  sm:flex justify-between items-center bg-blue-800 dark:bg-gray-600 px-3 rounded-t-lg">
                                 <ul class="flex justify-center sm:justify-start flex-wrap -mb-px text-sm font-medium text-center"

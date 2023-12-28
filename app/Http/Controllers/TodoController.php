@@ -6,8 +6,10 @@ use App\Models\Cronjob;
 use App\Models\Domain;
 use App\Models\Label;
 use App\Models\LabelDomain;
+use App\Models\Pelanggan;
 use App\Models\subLabelDomain;
 use App\Models\Todo;
+use App\Models\TodoTemp;
 use App\Models\User;
 use App\Services\Rapiwha\Rapiwha;
 use App\Services\Whatsapp\Whatsapp;
@@ -129,7 +131,17 @@ class TodoController extends Controller
     }
     public function store(Request $request)
     {
+        $this->storeFunction($request);
+        return redirect()->route('todo.index')->with(['success' => 'Todo berhasil ditambahkan', 'whatsapp_success' => 'Berhasil Mengirim Pesan WhatsApp']);
+    }
+    public function storeFunction($request)
+    {
         $labels = $request->input('labels', []);
+        if ($request->has('todoFrom')) {
+            $todoFrom = $request->todoFrom;
+        } else {
+            $todoFrom = Auth::user()->id;
+        }
 
         $nama_domain = [];
         $domains = $request->input('domain', []);
@@ -157,7 +169,7 @@ class TodoController extends Controller
                 $todo = new Todo();
                 $todo->subject = $request->subject;
                 $todo->catatan = $request->catatan;
-                $todo->todoFrom = Auth::user()->id;
+                $todo->todoFrom = $todoFrom;
                 $todo->save();
                 $todo->label()->syncWithoutDetaching($labels);
                 $todo->domains()->attach($domainId);
@@ -167,7 +179,7 @@ class TodoController extends Controller
             $todo = new Todo();
             $todo->subject = $request->subject;
             $todo->catatan = $request->catatan;
-            $todo->todoFrom = Auth::user()->id;
+            $todo->todoFrom = $todoFrom;
             $todo->save();
             $todo->label()->syncWithoutDetaching($labels);
             $todo->users()->attach($request->user);
@@ -200,13 +212,8 @@ Keterangan :
             // $whatsapp = new Rapiwha();
             $whatsapp = new Woowa();
             // $whatsapp = new Whatsapp();
-            $response =  $whatsapp->sendWhatsapp($item->no_hp, $messages);
+            $whatsapp->sendWhatsapp($item->no_hp, $messages);
         }
-        // if ($response) {
-        return redirect()->route('todo.index')->with(['success' => 'Todo berhasil ditambahkan', 'whatsapp_success' => 'Berhasil Mengirim Pesan WhatsApp']);
-        // } else {
-        //     return redirect()->route('todo.index')->with(['success' => 'Todo berhasil ditambahkan'])->with(['error' => 'Gagal Mengirimkan Pesan WhatsApp']);
-        // }
     }
     public function todosStore(Request $request)
     {
@@ -561,7 +568,7 @@ Subject :
     }
     public function getPointUsers(User $user, $start, $end, Request $request)
     {
-        $data = $user->todos()->where('status', 'deleted')->whereBetween('doneAt', [$start, $end])->with('domains', 'from')->get();
+        $data = $user->todos()->where('status', 'deleted')->whereBetween('doneAt', [$start, $end])->with('domains', 'from', 'file')->get();
         $point =  $user->todos()->whereBetween('doneAt', [$start, $end])->sum('point');
         if ($request->ajax()) {
             return DataTables::of($data)
@@ -613,5 +620,39 @@ Subject :
         $start = date('Y-m-01');
         $end = date('Y-m-t');
         return view('master.todo.reportUser', compact('start', 'end', 'user'));
+    }
+
+    public function createTodoByUser($slug)
+    {
+        $domain = Domain::where('slug', $slug)->first();
+        $auth = Auth::user()->id;
+        $pelanggan = Pelanggan::where('user_id', $auth)->first();
+        return view('master.todo.createByUser', compact('domain', 'pelanggan'));
+    }
+    public function storeTodoByUser(Request $request)
+    {
+        $todoTemp = new TodoTemp();
+        $todoTemp->domain_id = $request->domain_id;
+        $todoTemp->subject = $request->subject;
+        $todoTemp->catatan = $request->catatan;
+        $todoTemp->todoFrom = Auth::user()->id;
+        $todoTemp->save();
+
+        return redirect()->route('member.index')->with(['success' => 'Berhasil Mengirim Permintaan']);
+    }
+    public function todosConfirmUser(Request $request, $todotemp)
+    {
+        $this->storeFunction($request);
+        $todoTemps = TodoTemp::findOrFail($todotemp);
+        $todoTemps->status = 'submit';
+        $todoTemps->save();
+        return redirect()->back()->with(['success' => 'Todo Berhasil di Tambahkan']);
+    }
+    public function todosChangePoint(Request $request)
+    {
+        $todo = Todo::findOrFail($request->id);
+        $todo->point = $request->point;
+        $todo->save();
+        return response('Point Berhasil Diubah');
     }
 }

@@ -199,3 +199,46 @@
         });
     });
 </script>
+<script>
+    $(document).ready(function() {
+        $('.fileInput').change(function(e) {
+            e.preventDefault();
+
+            var formData = new FormData();
+            formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+
+            var files = $(this)[0].files;
+            const idTodo = $(this).data('todo-id');
+            for (var i = 0; i < files.length; i++) {
+                formData.append('files[]', files[i]);
+            }
+            loading.style.display = 'block';
+
+            $.ajax({
+                url: '{{ route('fileTodo.store', ':id') }}'.replace(':id', idTodo),
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                xhr: function() {
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener('progress', function(evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = (evt.loaded / evt.total) * 100;
+                            $('#progressBarStatus-' + idTodo).width(
+                                percentComplete + '%');
+                        }
+                    }, false);
+                    return xhr;
+                },
+                success: function(response) {
+                    $('#fileContainer-' + idTodo).load(
+                        '{{ route('todos.fileContainer', ':id') }}'
+                        .replace(
+                            ':id', idTodo));
+                    loading.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>

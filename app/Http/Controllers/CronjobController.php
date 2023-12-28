@@ -9,6 +9,7 @@ use App\Models\subLabelDomain;
 use App\Models\Todo;
 use App\Models\User;
 use App\Services\Woowa\Woowa;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -16,9 +17,7 @@ class CronjobController extends Controller
 {
     public function index(Request $request)
     {
-
         $data = Cronjob::with('domains', 'users')->get();
-
         if ($request->ajax()) {
             return DataTables::of($data)
                 ->addIndexColumn()

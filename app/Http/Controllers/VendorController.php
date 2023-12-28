@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class VendorController extends Controller
 {
-    public function show($id)
+    public function show($id, Request $request)
     {
         $vendorDomains = Domain::select('vendor', 'nama_domain')
             ->whereNotNull('vendor')

@@ -6,6 +6,7 @@ use App\Http\Controllers\CompareController;
 use App\Http\Controllers\CronjobController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DomainController;
+use App\Http\Controllers\FileTodoController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LabelController;
@@ -23,6 +24,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SendEmailController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\TodoController;
+use App\Http\Controllers\TodoTempController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WhatsappController;
@@ -123,6 +125,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('pelanggan/{pelanggan}', [PelangganController::class, 'update'])->name('pelanggan.update');
     Route::get('order', [OrderController::class, 'index'])->name('order.index');
     Route::get('order/{order}/{number}', [OrderController::class, 'show'])->name('order.show');
+    Route::get('websites/edit/{slug}', [TodoController::class, 'createTodoByUser'])->name('createTodoByUser');
+    Route::post('websites/edit/{pelanggan}', [TodoController::class, 'StoreTodoByUser'])->name('storeTodoByUser');
 });
 
 
@@ -185,6 +189,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('todos/piechart/{user}', [TodoController::class, 'piechart'])->name('todo.piechart');
     Route::get('todos/piechartAll', [TodoController::class, 'getAllPieChart'])->name('todo.allPiechart');
     Route::post('todos/confirm', [TodoController::class, 'todosConfirm'])->name('todos.confirm');
+    Route::post('todos/confirm/user/{todotemp}', [TodoController::class, 'todosConfirmUser'])->name('todos.confirmUser');
     Route::get('todos/point', [TodoController::class, 'getPoint'])->name('todos.getPoint');
     Route::get('todos/pointUser/{user}/{start}/{end}', [TodoController::class, 'getPointUser'])->name('todos.getPointUser');
     Route::delete('todos/delete/{todo}', [TodoController::class, 'destroy2']);
@@ -193,6 +198,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('/notepad', NotepadController::class);
     Route::resource('/cronjob', CronjobController::class);
     Route::put('/users/{user}', [UserController::class, 'updatePassword'])->name('users.passwordUpdate');
+    Route::resource('/todoTemp', TodoTempController::class);
+    Route::put('todos/point/changepoint', [TodoController::class, 'todosChangePoint']);
 });
 
 Route::middleware(['auth', 'support'])->group(function () {
@@ -219,6 +226,10 @@ Route::middleware(['auth', 'support'])->group(function () {
     Route::delete('todos/destroy/unConfirm/{todo}', [TodoController::class, 'destroy'])->name('todos.destroy');
     Route::get('/todos/view/report', [TodoController::class, 'viewReport'])->name('todos.viewReport');
     Route::get('todos/pointUsers/{user}/{start}/{end}', [TodoController::class, 'getPointUsers'])->name('todos.getPointUsers');
+    Route::post('todos/attachment/{todo}', [FileTodoController::class, 'store'])->name('fileTodo.store');
+    Route::get('todos/file/container/{todo}', [FileTodoController::class, 'index'])->name('todos.fileContainer');
+    Route::delete('todos/file/{fileTodo}', [FileTodoController::class, 'destroy'])->name('fileTodo.destroy');
+    Route::get('todos/file/download/{fileTodo}', [FileTodoController::class, 'download'])->name('fileTodo.download');
 });
 
 require __DIR__ . '/auth.php';

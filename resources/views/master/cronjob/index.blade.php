@@ -98,6 +98,34 @@
                     name: 'action'
                 },
             ],
+            responsive: {
+                details: {
+                    renderer: function(api, rowIdx, columns) {
+                        let data = columns.map((col, i) => {
+                            return col.hidden ?
+                                '<tr class="text-start" data-dt-row="' +
+                                col.rowIndex +
+                                '" data-dt-column="' +
+                                col.columnIndex +
+                                '">' +
+                                '<td class="text-start">' +
+                                col.title +
+                                ':' +
+                                '</td> ' +
+                                '<td class="text-start">' +
+                                col.data +
+                                '</td>' +
+                                '</tr>' :
+                                '';
+                        }).join('');
+
+                        let table = document.createElement('table');
+                        table.innerHTML = data;
+
+                        return data ? table : false;
+                    }
+                }
+            },
         });
         $('body').on('click', '.deleteProduct', function() {
 

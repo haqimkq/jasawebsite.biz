@@ -22,11 +22,19 @@
                         </div>
                     @endif
                 </div>
-                <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M9 5 5 1 1 5" />
-                </svg>
+                <div class="flex gap-1 items-center">
+                    <div>
+                        <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5 5 1 1 5" />
+                        </svg>
+                    </div>
+                    <div data-modal-target="addFileTodo-{{ $item->id }}"
+                        data-modal-toggle="addFileTodo-{{ $item->id }}">
+                        <i class="fa-solid fa-paperclip"></i>
+                    </div>
+                </div>
             </button>
             <div class="bod hidden mt-1" id="div{{ $item->id }}">
                 @if ($item->isConfirm == false)
@@ -43,6 +51,7 @@
         </div>
     </div>
 </div>
+<x-modal.addFileTodo :todo="$item"></x-modal.addFileTodo>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var subjectTexts = document.querySelectorAll('.subjectText');

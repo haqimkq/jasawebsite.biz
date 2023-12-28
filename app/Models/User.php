@@ -28,7 +28,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'isSupport',
         'no_hp',
         'image',
-        'isShowPoint'
+        'isShowPoint',
+        'isMember'
     ];
 
     /**

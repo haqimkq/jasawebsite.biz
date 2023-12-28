@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
+
         $cronjob = Cronjob::whereDate('date', Carbon::now()->format('d'))
             ->whereRaw("DATE_FORMAT(time, '%H:%i') >= '" . Carbon::now()->format('H:i') . "'")
             ->get();
@@ -26,6 +27,10 @@ class Kernel extends ConsoleKernel
             $formattedTime = $carbonTime->format('H:i');
             $schedule->command('app:generate-todo-list');
         }
+
+        $schedule->command('app:underated-point-todo-list')
+            ->weekdays()
+            ->at('20:00');
     }
 
 

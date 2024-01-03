@@ -105,7 +105,6 @@ class UserController extends Controller
 
 
         return redirect()->back();
-        // return redirect(RouteServiceProvider::HOME);
     }
     public function update(Request $request, User $user)
     {

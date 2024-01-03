@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\WhoisController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\CompareController;
 use App\Http\Controllers\CronjobController;
 use App\Http\Controllers\DashboardController;
@@ -32,6 +33,7 @@ use App\Http\Controllers\WhatsappGatewayController;
 use App\Http\Controllers\WhatsappRandomController;
 use App\Http\Controllers\YoutubeController;
 use App\Models\LabelDomain;
+use Chatify\Http\Controllers\MessagesController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -56,6 +58,8 @@ Route::get('/sites/maintenance', function () {
     return Artisan::call('down');
 });
 Route::post('payments/midtrans-notification', [PaymentCallbackController::class, 'receive']);
+Route::get('auth/google', [SocialiteController::class, 'redirectToProvider'])->name('auth.google');
+Route::get('auth/google/callback', [SocialiteController::class, 'handleProvideCallback']);
 
 // Portofolio
 Route::middleware(['auth', 'admin'])->controller(PortofolioController::class)->group(
@@ -127,6 +131,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('order/{order}/{number}', [OrderController::class, 'show'])->name('order.show');
     Route::get('websites/edit/{slug}', [TodoController::class, 'createTodoByUser'])->name('createTodoByUser');
     Route::post('websites/edit/{pelanggan}', [TodoController::class, 'StoreTodoByUser'])->name('storeTodoByUser');
+    Route::get('chats/count', [MessagesController::class, 'getUnreadCount']);
 });
 
 

@@ -26,7 +26,7 @@
 
 
     {{-- Page What We Do --}}
-    <div class="container-fluid sm:h-screen bg-white  py-5 sm:mx-auto sm:flex sm:items-center">
+    {{-- <div class="container-fluid sm:h-screen bg-white  py-5 sm:mx-auto sm:flex sm:items-center">
         <div class="py-5">
             <h5 class="text-center text-2xl sm:text-4xl font-bold tracking-tighter mb-5 text-gray-800">what we
                 do ?</h5>
@@ -91,10 +91,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     {{-- Page Important Website --}}
-    <div class="container-fluid sm:h-screen">
+    {{-- <div class="container-fluid sm:h-screen">
         <div class="sm:grid sm:grid-cols-2">
             <div class="sm:h-screen sm:mx-auto sm:flex sm:items-center px-14 lg:px-20 sm:px-10 mx-auto py-5 sm:py-0">
                 <img class="object-cover"
@@ -130,10 +130,10 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     {{-- Jasawebsite.biz --}}
-    <div class="container-fluid bg-white p-5 ">
+    {{-- <div class="container-fluid bg-white p-5 ">
         <h2 class="text-center text-4xl font-extrabold tracking-tighter mb-2">Mengapa harus Jasawebsite.biz</h2>
         <p class="text-center text-xl font-medium text-gray-600">Lebih Dari 1000 Klien Telah Memilih <span
                 class="text-red-500 font-extrabold"> Jasawebsite.biz </span> Untuk Pembuatan Website Sejak Tahun
@@ -204,14 +204,13 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     {{-- Portofolio --}}
-    <div class="container-fluid pt-10">
+    {{-- <div class="container-fluid pt-10">
         <h5 class="text-white text-center text-4xl font-extrabold font-mono">Portofolio</h5>
 
         @if (Auth::user() && Auth::user()->isAdmin == true)
-            {{-- modal --}}
             <div class=" flex justify-end px-10">
                 <button
                     class=" text-white bg-gray-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -294,15 +293,39 @@
             <a href="{{ route('portofolio') }}" class="text-white bg-gray-600 p-3 rounded tracking-tighter">Lihat
                 semua Portofolio</a>
         </div>
-    </div>
+    </div> --}}
 
     {{-- Floating Button --}}
-    <a href="http://bit.ly/konsultasiwebjbiz" target="_blank">
+    {{-- <a href="http://bit.ly/konsultasiwebjbiz" target="_blank">
         <button class="btn-floating whatsapp">
             <i class="fa-brands fa-whatsapp"></i>
             <span>Click For Chat</span>
         </button>
-    </a>
+    </a> --}}
+    <button class="btn-floating whatsapp" id="liveChat">
+        <div class="">
+            <div>
+                <div class="relative w-4 mx-auto">
+                    <i class="fa-solid fa-comment"></i>
+                    <div class="absolute top-0 right-[-4px] w-3 h-3 bg-red-500 rounded-full" style="display: none"
+                        id="tickChat">
+                    </div>
+                </div>
+            </div>
+            <span>Click For Chat</span>
+        </div>
+    </button>
+    <div id="liveChatContainer" class="fixed bottom-[25px] right-[25px] w-80 z-50" style="display: none">
+        <div class="relative">
+            <div class="absolute text-right top-0 p-[15px] right-1 font-extrabold">
+                <button id="closeButton" class="text-white">X</button>
+            </div>
+            <div id="getLiveChat" class="w-80 h-96 rounded-lg overflow-hidden">
+                <iframe src="{{ route('user', 1) }}" frameborder="0" class="h-full w-full"></iframe>
+            </div>
+        </div>
+    </div>
+
     {{-- Script --}}
     <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
     <script>
@@ -323,6 +346,5 @@
             .deleteAll()
             .start();
     </script>
-
 
 </x-app-layout>

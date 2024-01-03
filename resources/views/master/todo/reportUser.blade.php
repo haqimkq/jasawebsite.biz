@@ -86,6 +86,7 @@
     </x-app-layout>
     <script>
         $(document).ready(function() {
+            $.fn.dataTable.moment('M/D/YYYY');
 
             function fetchData(start, end) {
                 $.ajax({
@@ -212,7 +213,7 @@
                             const doneAt = doneAtDate.toLocaleDateString('id-ID', options).replace(
                                 'pukul', '');
 
-                            return doneAt;
+                            return data;
                         }
                     },
                     {

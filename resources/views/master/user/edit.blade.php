@@ -66,6 +66,19 @@
                                         :value="old('email', $user->email)" required autocomplete="username" />
                                     <x-input-error class="mt-2" :messages="$errors->get('email')" />
                                 </div>
+                                @if ($user->isSupport == false && $user->isAdmin == false)
+                                    <div>
+                                        <x-input-label for="isMember" :value="__('Premium User')" />
+                                        <select name="isMember" id="isMember"
+                                            class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full mt-2">
+                                            <option {{ $user->isMember == true ? 'selected' : '' }} value="1">
+                                                Member
+                                            </option>
+                                            <option {{ $user->isMember == false ? 'selected' : '' }} value="0">Non
+                                                Member</option>
+                                        </select>
+                                    </div>
+                                @endif
                                 @if ($user->isSupport == true)
                                     <div>
                                         <x-input-label for="no_hp" :value="__('Nomor Hp')" />

@@ -100,9 +100,9 @@
 
                         </div>
                     </div>
-                    <div class="flex-auto border rounded-lg p-5 border-gray-500 mt-10 lg:mt-0 grid">
+                    <div class="flex-auto border rounded-lg p-5 border-gray-500 mt-10 lg:mt-0">
                         <h2 class="dark:text-white text-black text-xl lg:text-3xl mb-5">Daftar Domain</h2>
-                        <div class="rounded-lg overflow-x-auto">
+                        <div class="rounded-lg overflow-x-auto grid">
                             <table class="w-full text-sm text-left text-gray-400" id="tableUser">
                                 <thead
                                     class="text-xs uppercase bg-blue-900 dark:bg-gray-700 text-white dark:text-gray-200 text-center whitespace-nowrap">
@@ -116,12 +116,6 @@
                                         <th scope="col" class="px-6 py-3">
                                             Tanggal Expired
                                         </th>
-                                        {{-- <th scope="col" class="px-6 py-3">
-                                            Nameserver
-                                        </th> --}}
-                                        {{-- <th scope="col" class="px-6 py-3">
-                                            Status
-                                        </th> --}}
                                         <th scope="col" class="px-6 py-3">
                                             Action
                                         </th>
@@ -153,31 +147,13 @@
                                             <td class="px-6 py-4 dark:text-white text-gray-900">
                                                 {{ $item->tanggal_expired }}
                                             </td>
-                                            {{-- <td class="px-6 py-4 dark:to-blue-500 text-blue-600">
-                                                <button data-modal-target="editNameserver-{{ $item->id }}"
-                                                    data-modal-toggle="editNameserver-{{ $item->id }}">
-                                                    {{ $item->nameserver ? $item->nameserver->nameserver1 : 'null' }}
-                                                </button>
-                                            </td>
-
-                                            <x-modal.editNameserver id='{{ $item->id }}'
-                                                nameserver1='{{ $item->nameserver ? $item->nameserver->nameserver1 : null }}'
-                                                nama_domain="{{ $item->nama_domain }}"
-                                                nameserver2='{{ $item->nameserver ? $item->nameserver->nameserver2 : null }}'>
-                                            </x-modal.editNameserver> --}}
-                                            {{-- <td class="text-black dark:text-white">
-                                                @if ($today >= $expirationDate::parse($item->tanggal_expired))
-                                                    Expired
-                                                @else
-                                                    Aktif
-                                                @endif
-                                            </td> --}}
-
                                             <td class="px-6 py-4 flex justify-center items-center gap-2">
                                                 <a href="{{ route('domain.show', ['slug' => $item->slug]) }}"
                                                     class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Detail</a>
-                                                <a href="{{ route('createTodoByUser', ['slug' => $item->slug]) }}"
-                                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Support</a>
+                                                @if (Auth::user()->isMember == true)
+                                                    <a href="{{ route('createTodoByUser', ['slug' => $item->slug]) }}"
+                                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Support</a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

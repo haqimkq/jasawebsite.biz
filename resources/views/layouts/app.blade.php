@@ -130,7 +130,53 @@
             </div>
 
             {{ $slot }}
+            @if (Auth::user()->isAdmin == true)
+                <div>
+                    <button class="btn-floating whatsapp" id="liveChat">
+                        <div class="">
+                            <div>
+                                <div class="relative w-4 mx-auto">
+                                    <i class="fa-solid fa-comment"></i>
+                                    <div class="absolute top-0 right-[-4px] w-3 h-3 bg-red-500 rounded-full"
+                                        style="display: none" id="tickChat">
+                                    </div>
+                                </div>
+                            </div>
+                            <span>Click For Chat</span>
+                        </div>
+                    </button>
+                    <div id="liveChatContainer" class="fixed bottom-[25px] right-[25px] w-80 z-50"
+                        style="display: none">
+                        <div class="relative">
+                            <div class="absolute text-right top-0 p-[15px] right-1 font-extrabold">
+                                <button id="closeButton" class="text-white">X</button>
+                            </div>
+                            <div id="getLiveChat" class="w-80 h-96 rounded-lg overflow-hidden">
+                                <iframe src="{{ route('Chat') }}" frameborder="0" class="h-full w-full"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+            <script>
+                function updateUnreadCount() {
+                    const tickChat = document.getElementById('tickChat');
+                    fetch('/chats/count')
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data > 0) {
+                                tickChat.style.display = 'block';
+                            } else {
+                                tickChat.style.display = 'none';
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error fetching unread messages:', error);
+                        });
+                }
 
+                setInterval(updateUnreadCount, 10000);
+            </script>
         </main>
     </div>
     {{-- @include('layouts.footer') --}}
@@ -170,6 +216,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/datepicker.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
         integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
+    <script>
+        const buttonChat = document.getElementById('liveChat');
+        const closeButton = document.getElementById('closeButton');
+        const chatContainer = document.getElementById('liveChatContainer');
+
+        buttonChat.addEventListener('click', function() {
+            chatContainer.style.display = 'block';
+            buttonChat.style.display = 'none';
+        });
+        closeButton.addEventListener('click', function() {
+            chatContainer.style.display = 'none';
+            buttonChat.style.display = 'block';
+        });
+    </script>
 
     <script>
         $(document).ready(function() {

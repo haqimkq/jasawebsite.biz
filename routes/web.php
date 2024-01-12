@@ -34,8 +34,11 @@ use App\Http\Controllers\WhatsappRandomController;
 use App\Http\Controllers\YoutubeController;
 use App\Models\LabelDomain;
 use Chatify\Http\Controllers\MessagesController;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
+use Spatie\Sitemap\SitemapGenerator;
 
 /*
 |--------------------------------------------------------------------------
@@ -235,6 +238,18 @@ Route::middleware(['auth', 'support'])->group(function () {
     Route::get('todos/file/container/{todo}', [FileTodoController::class, 'index'])->name('todos.fileContainer');
     Route::delete('todos/file/{fileTodo}', [FileTodoController::class, 'destroy'])->name('fileTodo.destroy');
     Route::get('todos/file/download/{fileTodo}', [FileTodoController::class, 'download'])->name('fileTodo.download');
+});
+Route::get('/generate-sitemap', function () {
+    SitemapGenerator::create('https://client.webz.biz')->writeToFile(public_path('sitemap.xml'));
+
+    return 'Sitemap generated successfully!';
+});
+Route::get('/sitemap.xml', function () {
+    $sitemapUrl = 'https://client.webz.biz/sitemap.xml';
+    $client = new Client();
+    $response = $client->get($sitemapUrl);
+    $sitemapContent = $response->getBody()->getContents();
+    return Response::make($sitemapContent)->header('Content-Type', 'text/xml');
 });
 
 require __DIR__ . '/auth.php';

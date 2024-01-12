@@ -22,6 +22,7 @@
         "midtrans/midtrans-php": "^2.5",
         "munafio/chatify": "^1.6",
         "spatie/laravel-google-calendar": "^3.7",
+        "spatie/laravel-sitemap": "^7.0",
         "yajra/laravel-datatables": "10.0"
     },
     "require-dev": {

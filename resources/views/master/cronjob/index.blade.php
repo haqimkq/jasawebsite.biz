@@ -3,6 +3,9 @@
         <a href="{{ route('cronjob.create') }}"
             class=" w-full dark:bg-gray-600 bg-blue-900 text-white dark:text-gray-300 p-3 rounded text-xs sm:text-sm shadow-sm focus:outline-none hover:bg-orange-500 dark:hover:bg-gray-500"
             id="createNewProduct">Tambah Routine Todo List</a>
+        <a href="{{ route('reminder.create') }}"
+            class=" w-full dark:bg-gray-600 bg-blue-900 text-white dark:text-gray-300 p-3 rounded text-xs sm:text-sm shadow-sm focus:outline-none hover:bg-orange-500 dark:hover:bg-gray-500"
+            id="createNewProduct">Reminder Todo List</a>
 
     </div>
     <div class="mx-10 py-3 relative">

@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Cronjob;
 use App\Models\Domain;
+use App\Models\Reminder;
 use App\Models\Todo;
 use App\Models\User;
 use App\Services\Woowa\Woowa;
@@ -29,21 +30,21 @@ class UnderatedPointTodoList extends Command
 
     public function handle()
     {
-        $user = User::where('isAdmin', false)->where('isSupport', true)->get();
+        $user = Reminder::all();
         $todoData = [];
 
         $currentDateTime = Carbon::now();
 
         foreach ($user as $users) {
-            $todos = $users->todos()->whereDate('doneAt', $currentDateTime->toDateString())
+            $todos = $users->users->todos()->whereDate('doneAt', $currentDateTime->toDateString())
                 ->whereTime('doneAt', '<', $currentDateTime->toTimeString())
                 ->get();
 
             $todoCount = $todos->count();
             if ($todoCount < 2) {
-                $todoData[$users->name]['user'] = $users;
-                $todoData[$users->name]['todos'] = $todos->toArray();
-                $todoData[$users->name]['count'] = $todos->count();
+                $todoData[$users->users->name]['user'] = $users->users;
+                $todoData[$users->users->name]['todos'] = $todos->toArray();
+                $todoData[$users->users->name]['count'] = $todos->count();
             }
         }
         foreach ($todoData as $data) {

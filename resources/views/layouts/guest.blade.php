@@ -5,6 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="description"
+        content="Selamat datang di JasaWebsite.biz, platform profesional untuk membuat dan mengelola situs web. Login ke akun Anda untuk mengakses berbagai fitur dan layanan, termasuk desain web kustom, pengelolaan konten, dan pemantauan performa situs. Dapatkan pengalaman membuat website yang mudah dan efisien bersama JasaWebsite.biz">
+
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 

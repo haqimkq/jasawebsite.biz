@@ -22,6 +22,7 @@ use App\Http\Controllers\PaymentCallbackController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PortofolioController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\SendEmailController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\TodoController;
@@ -208,6 +209,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/users/{user}', [UserController::class, 'updatePassword'])->name('users.passwordUpdate');
     Route::resource('/todoTemp', TodoTempController::class);
     Route::put('todos/point/changepoint', [TodoController::class, 'todosChangePoint']);
+    Route::get('/todos/reminder', [ReminderController::class, 'create'])->name('reminder.create');
+    Route::post('/todos/reminder', [ReminderController::class, 'store'])->name('reminder.store');
 });
 
 Route::middleware(['auth', 'support'])->group(function () {
